@@ -134,7 +134,7 @@ namespace DataGridFilterLibrary.Querying
 
             try
             {
-                if (type == typeof(Nullable<DateTime>) || type == typeof(DateTime))
+                if (type == typeof(DateTime?) || type == typeof(DateTime))
                 {
                     parameterValue = DateTime.Parse(stringValue);
                 }

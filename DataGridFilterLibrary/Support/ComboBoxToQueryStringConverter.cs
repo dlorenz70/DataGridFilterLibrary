@@ -10,15 +10,9 @@ namespace DataGridFilterLibrary.Support
     {
         #region IValueConverter Members
 
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return value != null && value.ToString() == String.Empty ? null : value;
-        }
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => value?.ToString() == String.Empty ? null : value;
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return value;
-        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => value;
 
         #endregion
     }

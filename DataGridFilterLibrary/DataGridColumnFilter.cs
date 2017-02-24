@@ -41,8 +41,8 @@ namespace DataGridFilterLibrary
 
                 filterCurrentData_FilterChangedEvent(this, EventArgs.Empty);//init query
 
-                FilterCurrentData.FilterChangedEvent -= new EventHandler<EventArgs>(filterCurrentData_FilterChangedEvent);
-                FilterCurrentData.FilterChangedEvent += new EventHandler<EventArgs>(filterCurrentData_FilterChangedEvent);
+                FilterCurrentData.FilterChangedEvent -= filterCurrentData_FilterChangedEvent;
+                FilterCurrentData.FilterChangedEvent += filterCurrentData_FilterChangedEvent;
             }
 
             base.OnPropertyChanged(e);
@@ -104,7 +104,7 @@ namespace DataGridFilterLibrary
         public static readonly DependencyProperty IsFilteringInProgressProperty =
             DependencyProperty.Register("IsFilteringInProgress", typeof(bool), typeof(DataGridColumnFilter));
 
-        public FilterType FilterType { get { return FilterCurrentData != null ? FilterCurrentData.Type : FilterType.Text; } }
+        public FilterType FilterType => FilterCurrentData != null ? FilterCurrentData.Type : FilterType.Text;
 
         public bool IsTextFilterControl
         {
@@ -120,6 +120,7 @@ namespace DataGridFilterLibrary
             get { return (bool)GetValue(IsNumericFilterControlProperty); }
             set { SetValue(IsNumericFilterControlProperty, value); }
         }
+
         public static readonly DependencyProperty IsNumericFilterControlProperty =
             DependencyProperty.Register("IsNumericFilterControl", typeof(bool), typeof(DataGridColumnFilter));
 
@@ -128,6 +129,7 @@ namespace DataGridFilterLibrary
             get { return (bool)GetValue(IsNumericBetweenFilterControlProperty); }
             set { SetValue(IsNumericBetweenFilterControlProperty, value); }
         }
+
         public static readonly DependencyProperty IsNumericBetweenFilterControlProperty =
             DependencyProperty.Register("IsNumericBetweenFilterControl", typeof(bool), typeof(DataGridColumnFilter));
 
@@ -136,6 +138,7 @@ namespace DataGridFilterLibrary
             get { return (bool)GetValue(IsBooleanFilterControlProperty); }
             set { SetValue(IsBooleanFilterControlProperty, value); }
         }
+
         public static readonly DependencyProperty IsBooleanFilterControlProperty =
             DependencyProperty.Register("IsBooleanFilterControl", typeof(bool), typeof(DataGridColumnFilter));
 
@@ -144,6 +147,7 @@ namespace DataGridFilterLibrary
             get { return (bool)GetValue(IsListFilterControlProperty); }
             set { SetValue(IsListFilterControlProperty, value); }
         }
+
         public static readonly DependencyProperty IsListFilterControlProperty =
             DependencyProperty.Register("IsListFilterControl", typeof(bool), typeof(DataGridColumnFilter));
 
@@ -152,6 +156,7 @@ namespace DataGridFilterLibrary
             get { return (bool)GetValue(IsDateTimeFilterControlProperty); }
             set { SetValue(IsDateTimeFilterControlProperty, value); }
         }
+
         public static readonly DependencyProperty IsDateTimeFilterControlProperty =
             DependencyProperty.Register("IsDateTimeFilterControl", typeof(bool), typeof(DataGridColumnFilter));
 
@@ -160,6 +165,7 @@ namespace DataGridFilterLibrary
             get { return (bool)GetValue(IsDateTimeBetweenFilterControlProperty); }
             set { SetValue(IsDateTimeBetweenFilterControlProperty, value); }
         }
+
         public static readonly DependencyProperty IsDateTimeBetweenFilterControlProperty =
             DependencyProperty.Register("IsDateTimeBetweenFilterControl", typeof(bool), typeof(DataGridColumnFilter));
 
@@ -168,6 +174,7 @@ namespace DataGridFilterLibrary
             get { return (bool)GetValue(IsFirstFilterControlProperty); }
             set { SetValue(IsFirstFilterControlProperty, value); }
         }
+
         public static readonly DependencyProperty IsFirstFilterControlProperty =
             DependencyProperty.Register("IsFirstFilterControl", typeof(bool), typeof(DataGridColumnFilter));
 
@@ -176,6 +183,7 @@ namespace DataGridFilterLibrary
             get { return (bool)GetValue(IsControlInitializedProperty); }
             set { SetValue(IsControlInitializedProperty, value); }
         }
+
         public static readonly DependencyProperty IsControlInitializedProperty =
             DependencyProperty.Register("IsControlInitialized", typeof(bool), typeof(DataGridColumnFilter));
         #endregion
@@ -209,7 +217,7 @@ namespace DataGridFilterLibrary
                     valuePropertyBindingPath, getItemSourceElementType(out typeInitialized));
 
                 FilterType filterType = getFilterType(
-                    valuePropertyType, 
+                    valuePropertyType,
                     isComboDataGridColumn(),
                     isBetweenType());
 
@@ -219,11 +227,11 @@ namespace DataGridFilterLibrary
                 string queryStringTo = String.Empty;
 
                 FilterCurrentData = new FilterData(
-                    filterOperator, 
-                    filterType, 
-                    valuePropertyBindingPath, 
-                    valuePropertyType, 
-                    queryString, 
+                    filterOperator,
+                    filterType,
+                    valuePropertyBindingPath,
+                    valuePropertyType,
+                    queryString,
                     queryStringTo,
                     typeInitialized,
                     DataGridColumnExtensions.GetIsCaseSensitiveSearch(AssignedDataGridColumn));
@@ -282,7 +290,6 @@ namespace DataGridFilterLibrary
 
                 if (comboBox != null && column != null)
                 {
-
                     if (DataGridComboBoxExtensions.GetIsTextFilter(column))
                     {
                         FilterCurrentData.Type = FilterType.Text;
@@ -290,8 +297,7 @@ namespace DataGridFilterLibrary
                     }
                     else //list filter type
                     {
-                        Binding columnItemsSourceBinding = null;
-                        columnItemsSourceBinding = BindingOperations.GetBinding(column, DataGridComboBoxColumn.ItemsSourceProperty);
+                        Binding columnItemsSourceBinding = BindingOperations.GetBinding(column, DataGridComboBoxColumn.ItemsSourceProperty);
 
                         if (columnItemsSourceBinding == null)
                         {
@@ -308,7 +314,7 @@ namespace DataGridFilterLibrary
                             BindingOperations.SetBinding(comboBox, ComboBox.ItemsSourceProperty, columnItemsSourceBinding);
                         }
 
-                        comboBox.RequestBringIntoView 
+                        comboBox.RequestBringIntoView
                             += new RequestBringIntoViewEventHandler(setComboBindingAndHanldeUnsetValue);
                     }
                 }
@@ -355,8 +361,8 @@ namespace DataGridFilterLibrary
 
                 columnList = column.ItemsSource.Cast<object>().ToList();
 
-                if (comboList == null ||
-                    (columnList.Count > 0 && columnList.Count + 1 != comboList.Count))
+                if (comboList == null
+                    || (columnList.Count > 0 && columnList.Count + 1 != comboList.Count))
                 {
                     columnList = column.ItemsSource.Cast<object>().ToList();
                     columnList.Insert(0, DependencyProperty.UnsetValue);
@@ -399,17 +405,7 @@ namespace DataGridFilterLibrary
 
                 path = null;
 
-                Binding binding = ((comboColumn.SelectedValueBinding) as Binding);
-
-                if (binding == null)
-                {
-                    binding = ((comboColumn.SelectedItemBinding) as Binding);
-                }
-
-                if (binding == null)
-                {
-                    binding = comboColumn.SelectedValueBinding as Binding;
-                }
+                Binding binding = comboColumn.SelectedValueBinding as Binding ?? (comboColumn.SelectedItemBinding) as Binding ?? comboColumn.SelectedValueBinding as Binding;
 
                 if (binding != null)
                 {
@@ -418,11 +414,11 @@ namespace DataGridFilterLibrary
 
                 if (comboColumn.SelectedItemBinding != null && comboColumn.SelectedValueBinding == null)
                 {
-                    if (path != null && path.Trim().Length > 0)
+                    if (path?.Trim().Length > 0)
                     {
                         if (DataGridComboBoxExtensions.GetIsTextFilter(comboColumn))
                         {
-                            path += "." + comboColumn.DisplayMemberPath; 
+                            path += "." + comboColumn.DisplayMemberPath;
                         }
                         else
                         {
@@ -441,7 +437,7 @@ namespace DataGridFilterLibrary
 
             if (elementType != null)
             {
-                string[] properties = path.Split(".".ToCharArray()[0]);
+                string[] properties = path.Split("."[0]);
 
                 PropertyInfo pi = null;
 
@@ -462,7 +458,6 @@ namespace DataGridFilterLibrary
                     }
                 }
 
-
                 if (pi != null)
                 {
                     type = pi.PropertyType;
@@ -478,9 +473,9 @@ namespace DataGridFilterLibrary
 
             Type elementType = null;
 
-            IList l = (DataGridItemsSource as IList);
+            IList l = DataGridItemsSource as IList;
 
-            if (l != null && l.Count > 0)
+            if (l?.Count > 0)
             {
                 object obj = l[0];
 
@@ -496,9 +491,9 @@ namespace DataGridFilterLibrary
             }
             if (l == null)
             {
-                ListCollectionView lw = (DataGridItemsSource as ListCollectionView);
+                ListCollectionView lw = DataGridItemsSource as ListCollectionView;
 
-                if (lw != null && lw.Count > 0)
+                if (lw?.Count > 0)
                 {
                     object obj = lw.CurrentItem;
 
@@ -518,7 +513,7 @@ namespace DataGridFilterLibrary
         }
 
         private FilterType getFilterType(
-            Type valuePropertyType, 
+            Type valuePropertyType,
             bool isAssignedDataGridColumnComboDataGridColumn,
             bool isBetweenType)
         {
@@ -528,63 +523,63 @@ namespace DataGridFilterLibrary
             {
                 filterType = FilterType.List;
             }
-            else if (valuePropertyType == typeof(Boolean) || valuePropertyType == typeof(Nullable<Boolean>))
+            else if (valuePropertyType == typeof(Boolean) || valuePropertyType == typeof(Boolean?))
             {
                 filterType = FilterType.Boolean;
             }
-            else if (valuePropertyType == typeof(SByte) || valuePropertyType == typeof(Nullable<SByte>))
+            else if (valuePropertyType == typeof(SByte) || valuePropertyType == typeof(SByte?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(Byte) || valuePropertyType == typeof(Nullable<Byte>))
+            else if (valuePropertyType == typeof(Byte) || valuePropertyType == typeof(Byte?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(Int16) || valuePropertyType == typeof(Nullable<Int16>))
+            else if (valuePropertyType == typeof(Int16) || valuePropertyType == typeof(Int16?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(UInt16) || valuePropertyType == typeof(Nullable<UInt16>))
+            else if (valuePropertyType == typeof(UInt16) || valuePropertyType == typeof(UInt16?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(Int32) || valuePropertyType == typeof(Nullable<Int32>))
+            else if (valuePropertyType == typeof(Int32) || valuePropertyType == typeof(Int32?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(UInt32) || valuePropertyType == typeof(Nullable<UInt32>))
+            else if (valuePropertyType == typeof(UInt32) || valuePropertyType == typeof(UInt32?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(Int64) || valuePropertyType == typeof(Nullable<Int64>))
+            else if (valuePropertyType == typeof(Int64) || valuePropertyType == typeof(Int64?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(Single) || valuePropertyType == typeof(Nullable<Single>))
+            else if (valuePropertyType == typeof(Single) || valuePropertyType == typeof(Single?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(Int64) || valuePropertyType == typeof(Nullable<Int64>))
+            else if (valuePropertyType == typeof(Int64) || valuePropertyType == typeof(Int64?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(Decimal) || valuePropertyType == typeof(Nullable<Decimal>))
+            else if (valuePropertyType == typeof(Decimal) || valuePropertyType == typeof(Decimal?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(float) || valuePropertyType == typeof(Nullable<float>))
+            else if (valuePropertyType == typeof(float) || valuePropertyType == typeof(float?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(Double) || valuePropertyType == typeof(Nullable<Double>))
+            else if (valuePropertyType == typeof(Double) || valuePropertyType == typeof(Double?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(Int64) || valuePropertyType == typeof(Nullable<Int64>))
+            else if (valuePropertyType == typeof(Int64) || valuePropertyType == typeof(Int64?))
             {
                 filterType = FilterType.Numeric;
             }
-            else if (valuePropertyType == typeof(DateTime) || valuePropertyType == typeof(Nullable<DateTime>))
+            else if (valuePropertyType == typeof(DateTime) || valuePropertyType == typeof(DateTime?))
             {
                 filterType = FilterType.DateTime;
             }
@@ -605,15 +600,9 @@ namespace DataGridFilterLibrary
             return filterType;
         }
 
-        private bool isComboDataGridColumn()
-        {
-            return AssignedDataGridColumn is DataGridComboBoxColumn;
-        }
+        private bool isComboDataGridColumn() => AssignedDataGridColumn is DataGridComboBoxColumn;
 
-        private bool isBetweenType()
-        {
-            return DataGridColumnExtensions.GetIsBetweenFilterControl(AssignedDataGridColumn);
-        }
+        private bool isBetweenType() => DataGridColumnExtensions.GetIsBetweenFilterControl(AssignedDataGridColumn);
 
         private void hookUpCommands()
         {
@@ -623,6 +612,8 @@ namespace DataGridFilterLibrary
                     DataGrid, new DataGridFilterCommand(clearQuery));
             }
         }
+
+        private
         #endregion
 
         #region Querying
@@ -654,14 +645,14 @@ namespace DataGridFilterLibrary
 
         private void addFilterStateHandlers(QueryController query)
         {
-            query.FilteringStarted -= new EventHandler<EventArgs>(query_FilteringStarted);
-            query.FilteringFinished -= new EventHandler<EventArgs>(query_FilteringFinished);
+            query.FilteringStarted -= query_FilteringStarted;
+            query.FilteringFinished -= query_FilteringFinished;
 
-            query.FilteringStarted += new EventHandler<EventArgs>(query_FilteringStarted);
-            query.FilteringFinished += new EventHandler<EventArgs>(query_FilteringFinished);
+            query.FilteringStarted += query_FilteringStarted;
+            query.FilteringFinished += query_FilteringFinished;
         }
 
-        void query_FilteringFinished(object sender, EventArgs e)
+        private void query_FilteringFinished(object sender, EventArgs e)
         {
             if (FilterCurrentData.Equals((sender as QueryController).ColumnFilterData))
             {
@@ -669,7 +660,7 @@ namespace DataGridFilterLibrary
             }
         }
 
-        void query_FilteringStarted(object sender, EventArgs e)
+        private void query_FilteringStarted(object sender, EventArgs e)
         {
             if (FilterCurrentData.Equals((sender as QueryController).ColumnFilterData))
             {

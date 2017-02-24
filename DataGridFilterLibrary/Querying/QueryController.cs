@@ -19,8 +19,7 @@ namespace DataGridFilterLibrary.Querying
         public IEnumerable ItemsSource { get; set; }
 
         private readonly Dictionary<string, FilterData> filtersForColumns;
-
-        Query query;
+        private Query query;
 
         public Dispatcher CallingThreadDispatcher { get; set; }
         public bool UseBackgroundWorker { get; set; }
@@ -69,14 +68,8 @@ namespace DataGridFilterLibrary.Querying
             ColumnFilterData.IsRefresh = false;
         }
 
-        public bool IsCurentControlFirstControl
-        {
-            get
-            {
-                return filtersForColumns.Count > 0
-                    ? filtersForColumns.ElementAt(0).Value.ValuePropertyBindingPath == ColumnFilterData.ValuePropertyBindingPath : false;
-            }
-        }
+        public bool IsCurentControlFirstControl => filtersForColumns.Count > 0
+    ? filtersForColumns.ElementAt(0).Value.ValuePropertyBindingPath == ColumnFilterData.ValuePropertyBindingPath : false;
 
         public void ClearFilter()
         {
@@ -93,15 +86,9 @@ namespace DataGridFilterLibrary.Querying
 
         #region Internal
 
-        private bool isRefresh
-        {
-            get { return (from f in filtersForColumns where f.Value.IsRefresh == true select f).Count() > 0; }
-        }
+        private bool isRefresh => (from f in filtersForColumns where f.Value.IsRefresh select f).Any();
 
-        private bool filteringNeeded
-        {
-            get { return (from f in filtersForColumns where f.Value.IsSearchPerformed == false select f).Count() == 1; }
-        }
+        private bool filteringNeeded => (from f in filtersForColumns where !f.Value.IsSearchPerformed select f).Count() == 1;
 
         private void runFiltering(bool force)
         {
@@ -123,7 +110,7 @@ namespace DataGridFilterLibrary.Querying
 
             queryCreator.CreateFilter(ref query);
 
-            filterChanged = (query.IsQueryChanged || (query.FilterString != String.Empty && isRefresh));
+            filterChanged = query.IsQueryChanged || (query.FilterString != String.Empty && isRefresh);
 
             if ((force && query.FilterString != String.Empty) || (query.FilterString != String.Empty && filterChanged))
             {
@@ -139,7 +126,6 @@ namespace DataGridFilterLibrary.Querying
                 {
                     observable.CollectionChanged -= new System.Collections.Specialized.NotifyCollectionChangedEventHandler(observable_CollectionChanged);
                     observable.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(observable_CollectionChanged);
-
                 }
 
                 #region Debug
@@ -181,7 +167,7 @@ namespace DataGridFilterLibrary.Querying
         #region Internal Filtering
 
         private IList filteredCollection;
-        HashSet<object> filteredCollectionHashSet;
+        private HashSet<object> filteredCollectionHashSet;
 
         private void CommitEdit(ICollectionView view)
         {
@@ -197,7 +183,7 @@ namespace DataGridFilterLibrary.Querying
             }
         }
 
-        void applayFilter()
+        private void applayFilter()
         {
             ICollectionView view = CollectionViewSource.GetDefaultView(ItemsSource);
 
@@ -237,7 +223,7 @@ namespace DataGridFilterLibrary.Querying
             {
                 BackgroundWorker worker = new BackgroundWorker();
 
-                worker.DoWork += delegate (object sender, DoWorkEventArgs e)
+                worker.DoWork += (object sender, DoWorkEventArgs e) =>
                 {
                     lock (lockObject)
                     {
@@ -245,7 +231,7 @@ namespace DataGridFilterLibrary.Querying
                     }
                 };
 
-                worker.RunWorkerCompleted += delegate (object sender, RunWorkerCompletedEventArgs e)
+                worker.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) =>
                 {
                     if (e.Error != null)
                     {
@@ -270,14 +256,11 @@ namespace DataGridFilterLibrary.Querying
 
         private void executeActionUsingDispatcher(Action action)
         {
-            if (this.CallingThreadDispatcher != null && !this.CallingThreadDispatcher.CheckAccess())
+            if (this.CallingThreadDispatcher?.CheckAccess() == false)
             {
                 this.CallingThreadDispatcher.Invoke
                     (
-                        new Action(() =>
-                        {
-                            invoke(action);
-                        })
+                        new Action(() => invoke(action))
                     );
             }
             else
@@ -291,10 +274,7 @@ namespace DataGridFilterLibrary.Querying
             action.Invoke();
         }
 
-        private bool itemPassesFilter(object item)
-        {
-            return filteredCollectionHashSet.Contains(item);
-        }
+        private bool itemPassesFilter(object item) => filteredCollectionHashSet.Contains(item);
 
         #region Helpers
         private HashSet<object> initLookupDictionary(IList collection)
@@ -324,23 +304,17 @@ namespace DataGridFilterLibrary.Querying
 
         private void OnFilteringStarted(object sender, EventArgs e)
         {
-            EventHandler<EventArgs> localEvent = FilteringStarted;
-
-            if (localEvent != null) localEvent(sender, e);
+            FilteringStarted?.Invoke(sender, e);
         }
 
         private void OnFilteringFinished(object sender, EventArgs e)
         {
-            EventHandler<EventArgs> localEvent = FilteringFinished;
-
-            if (localEvent != null) localEvent(sender, e);
+            FilteringFinished?.Invoke(sender, e);
         }
 
         private void OnFilteringError(object sender, FilteringEventArgs e)
         {
-            EventHandler<FilteringEventArgs> localEvent = FilteringError;
-
-            if (localEvent != null) localEvent(sender, e);
+            FilteringError?.Invoke(sender, e);
         }
         #endregion
     }

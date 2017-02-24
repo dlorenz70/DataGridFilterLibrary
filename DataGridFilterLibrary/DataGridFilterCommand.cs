@@ -20,12 +20,9 @@ namespace DataGridFilterLibrary
             if (action != null) action(parameter);
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public bool CanExecute(object parameter) => true;
 
-       public event EventHandler CanExecuteChanged
+        public event EventHandler CanExecuteChanged
        {
            add { CommandManager.RequerySuggested += value; }
            remove { CommandManager.RequerySuggested -= value; }

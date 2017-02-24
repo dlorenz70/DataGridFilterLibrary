@@ -16,9 +16,6 @@ namespace DataGridFilterLibrary.Support
             return visibility == System.Windows.Visibility.Visible ? Double.NaN : 0;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
-        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => value;
     }
 }

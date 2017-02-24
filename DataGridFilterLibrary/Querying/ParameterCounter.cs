@@ -7,7 +7,7 @@ namespace DataGridFilterLibrary.Querying
 {
     public class ParameterCounter
     {
-        public int ParameterNumber { get { return count - 1; } }
+        public int ParameterNumber => count - 1;
 
         private int count { get; set; }
 
@@ -30,9 +30,6 @@ namespace DataGridFilterLibrary.Querying
             this.count = count;
         }
 
-        public override string ToString()
-        {
-            return ParameterNumber.ToString();
-        }
+        public override string ToString() => ParameterNumber.ToString();
     }
 }

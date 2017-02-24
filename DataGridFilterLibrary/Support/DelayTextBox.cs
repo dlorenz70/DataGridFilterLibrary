@@ -41,7 +41,7 @@ namespace DataGridFilterLibrary.Support
             PreviousTextValue = String.Empty;
         }
 
-        void DelayTextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void DelayTextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (!DelayTimer.Enabled)
                 DelayTimer.Enabled = true;
@@ -54,11 +54,13 @@ namespace DataGridFilterLibrary.Support
             KeysPressed = true;
         }
 
+        private
+
         #endregion
 
         #region event handlers
 
-        void DelayTimer_Elapsed(object sender, ElapsedEventArgs e)
+                void DelayTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             DelayTimer.Enabled = false;// stop timer.
 
@@ -85,7 +87,7 @@ namespace DataGridFilterLibrary.Support
                 base.OnTextChanged(e);
 
                 System.Windows.Data.BindingExpression be = this.GetBindingExpression(TextBox.TextProperty);
-                if (be != null && be.Status==System.Windows.Data.BindingStatus.Active) be.UpdateSource();
+                if (be?.Status == System.Windows.Data.BindingStatus.Active) be.UpdateSource();
 
                 PreviousTextValue = Text;
             }

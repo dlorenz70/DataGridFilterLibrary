@@ -12,10 +12,7 @@ namespace DataGridFilterLibrary.Support
     public sealed class DisplayStringAttribute : Attribute
     {
         private readonly string value;
-        public string Value
-        {
-            get { return value; }
-        }
+        public string Value => value;
 
         public string ResourceKey { get; set; }
 

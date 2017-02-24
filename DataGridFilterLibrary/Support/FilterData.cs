@@ -40,7 +40,7 @@ namespace DataGridFilterLibrary.Support
                     case FilterType.Numeric:
                     case FilterType.DateTime:
 
-                        filterChanged = (Operator != FilterOperator.Undefined || QueryString != String.Empty);
+                        filterChanged = Operator != FilterOperator.Undefined || QueryString != String.Empty;
                         break;
 
                     case FilterType.NumericBetween:
@@ -92,7 +92,7 @@ namespace DataGridFilterLibrary.Support
                 if(_operator != value)
                 {
                     _operator = value;
-                    NotifyPropertyChanged("Operator");
+                    NotifyPropertyChanged(nameof(Operator));
                     OnFilterChangedEvent();
                 }
             }
@@ -106,11 +106,9 @@ namespace DataGridFilterLibrary.Support
             {
                 if (queryString != value)
                 {
-                    queryString = value;
+                    queryString = value ?? String.Empty;
 
-                    if (queryString == null) queryString = String.Empty;
-
-                    NotifyPropertyChanged("QueryString");
+                    NotifyPropertyChanged(nameof(QueryString));
                     OnFilterChangedEvent();
                 }
             }
@@ -124,11 +122,9 @@ namespace DataGridFilterLibrary.Support
             {
                 if (queryStringTo != value)
                 {
-                    queryStringTo = value;
+                    queryStringTo = value ?? String.Empty;
 
-                    if (queryStringTo == null) queryStringTo = String.Empty;
-
-                    NotifyPropertyChanged("QueryStringTo");
+                    NotifyPropertyChanged(nameof(QueryStringTo));
                     OnFilterChangedEvent();
                 }
             }
@@ -160,10 +156,7 @@ namespace DataGridFilterLibrary.Support
 
         public void NotifyPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

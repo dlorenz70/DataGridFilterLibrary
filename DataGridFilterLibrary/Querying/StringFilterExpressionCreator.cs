@@ -8,7 +8,7 @@ namespace DataGridFilterLibrary.Querying
 {
     internal class StringFilterExpressionCreator
     {
-        const string WildcardAnyString = "%";
+        private const string WildcardAnyString = "%";
 
         private enum StringExpressionFunction
         {
@@ -18,11 +18,11 @@ namespace DataGridFilterLibrary.Querying
             EndsWith = 3
         }
 
-        FilterData filterData;
-        List<object> paramseters;
-        ParameterCounter paramCounter;
+        private FilterData filterData;
+        private List<object> paramseters;
+        private ParameterCounter paramCounter;
 
-        internal int ParametarsCrated { get { return paramseters.Count; } }
+        internal int ParametarsCrated => paramseters.Count;
 
         internal StringFilterExpressionCreator(
             ParameterCounter paramCounter, FilterData filterData, List<object> paramseters)
@@ -35,7 +35,7 @@ namespace DataGridFilterLibrary.Querying
         internal string Create()
         {
             StringBuilder filter = new StringBuilder();
-            
+
             List<string> filterList = parse(this.filterData.QueryString);
 
             for (int i = 0; i < filterList.Count; i++)
@@ -142,7 +142,7 @@ namespace DataGridFilterLibrary.Querying
                 filter.Append(" != -1 ");
             }
 
-            paramseters.Add(filterData.IsCaseSensitiveSearch 
+            paramseters.Add(filterData.IsCaseSensitiveSearch
                 ? StringComparison.CurrentCulture : StringComparison.CurrentCultureIgnoreCase);
 
             return filter.ToString();

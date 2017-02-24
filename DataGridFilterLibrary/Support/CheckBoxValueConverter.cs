@@ -13,23 +13,27 @@ namespace DataGridFilterLibrary.Support
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             bool result = false;
-
-            if (value != null && value.GetType() == typeof(String))
+            if (value?.GetType() == typeof(string))
             {
+                if (value.ToString().Length == 0)
+                {
+                    return null;
+                }
+
                 Boolean.TryParse(value.ToString(), out result);
             }
-            else if (value != null)
+            else
             {
-                result = System.Convert.ToBoolean(value);
+                if (value != null)
+                {
+                    result = System.Convert.ToBoolean(value);
+                }
             }
 
             return result;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return value;
-        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => value;
 
         #endregion
     }

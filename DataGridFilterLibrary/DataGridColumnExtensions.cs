@@ -13,10 +13,7 @@ namespace DataGridFilterLibrary
             DependencyProperty.RegisterAttached("IsCaseSensitiveSearch",
                 typeof(bool), typeof(DataGridColumn));
 
-        public static bool GetIsCaseSensitiveSearch(DependencyObject target)
-        {
-            return (bool)target.GetValue(IsCaseSensitiveSearchProperty);
-        }
+        public static bool GetIsCaseSensitiveSearch(DependencyObject target) => (bool)target.GetValue(IsCaseSensitiveSearchProperty);
 
         public static void SetIsCaseSensitiveSearch(DependencyObject target, bool value)
         {
@@ -27,10 +24,7 @@ namespace DataGridFilterLibrary
             DependencyProperty.RegisterAttached("IsBetweenFilterControl",
                 typeof(bool), typeof(DataGridColumn));
 
-        public static bool GetIsBetweenFilterControl(DependencyObject target)
-        {
-            return (bool)target.GetValue(IsBetweenFilterControlProperty);
-        }
+        public static bool GetIsBetweenFilterControl(DependencyObject target) => (bool)target.GetValue(IsBetweenFilterControlProperty);
 
         public static void SetIsBetweenFilterControl(DependencyObject target, bool value)
         {
@@ -41,10 +35,7 @@ namespace DataGridFilterLibrary
             DependencyProperty.RegisterAttached("DoNotGenerateFilterControl",
                 typeof(bool), typeof(DataGridColumn), new PropertyMetadata(false));
 
-        public static bool GetDoNotGenerateFilterControl(DependencyObject target)
-        {
-            return (bool)target.GetValue(DoNotGenerateFilterControlProperty);
-        }
+        public static bool GetDoNotGenerateFilterControl(DependencyObject target) => (bool)target.GetValue(DoNotGenerateFilterControlProperty);
 
         public static void SetDoNotGenerateFilterControl(DependencyObject target, bool value)
         {

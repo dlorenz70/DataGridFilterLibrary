@@ -92,7 +92,7 @@ namespace DataGridFilterLibrary.Support
 
         private string GetBackupDisplayStringValue(object enumValue)
         {
-            if (overriddenDisplayEntries != null && overriddenDisplayEntries.Count > 0)
+            if (overriddenDisplayEntries?.Count > 0)
             {
                 EnumDisplayEntry foundEntry = overriddenDisplayEntries.Find(delegate(EnumDisplayEntry entry)
                 {
@@ -103,7 +103,6 @@ namespace DataGridFilterLibrary.Support
                 {
                     if (foundEntry.ExcludeFromDisplay) return null;
                     return foundEntry.DisplayString;
-
                 }
             }
             return Enum.GetName(type, enumValue);
@@ -120,15 +119,9 @@ namespace DataGridFilterLibrary.Support
         }
 
 
-        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return displayValues[value];
-        }
+        object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture) => displayValues[value];
 
-        object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return reverseValues[value];
-        }
+        object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => reverseValues[value];
     }
 
     public class EnumDisplayEntry

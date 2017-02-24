@@ -13,16 +13,12 @@ namespace DataGridFilterLibrary
             DependencyProperty.RegisterAttached("IsTextFilter",
                 typeof(bool), typeof(DataGridComboBoxColumn));
 
-        public static bool GetIsTextFilter(DependencyObject target)
-        {
-            return (bool)target.GetValue(IsTextFilterProperty);
-        }
+        public static bool GetIsTextFilter(DependencyObject target) => (bool)target.GetValue(IsTextFilterProperty);
 
         public static void SetIsTextFilter(DependencyObject target, bool value)
         {
             target.SetValue(IsTextFilterProperty, value);
         }
-
 
         /// <summary>
         ///  if true ComboBox.IsEditable is true and ComboBox.IsReadOnly is false
@@ -33,16 +29,11 @@ namespace DataGridFilterLibrary
             DependencyProperty.RegisterAttached("UserCanEnterText",
                 typeof(bool), typeof(DataGridComboBoxColumn));
 
-        public static bool GetUserCanEnterText(DependencyObject target)
-        {
-            return (bool)target.GetValue(UserCanEnterTextProperty);
-        }
+        public static bool GetUserCanEnterText(DependencyObject target) => (bool)target.GetValue(UserCanEnterTextProperty);
 
         public static void SetUserCanEnterText(DependencyObject target, bool value)
         {
             target.SetValue(UserCanEnterTextProperty, value);
         }
-
-         
     }
 }

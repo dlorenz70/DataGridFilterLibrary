@@ -14,7 +14,7 @@ namespace DataGridFilterLibrary.Support
         {
             object convertedValue;
 
-            if (value != null && value.ToString() == String.Empty)
+            if (value?.ToString() == String.Empty)
             {
                 convertedValue = null;
             }
@@ -39,10 +39,7 @@ namespace DataGridFilterLibrary.Support
             return convertedValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return value;
-        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => value;
 
         #endregion
     }

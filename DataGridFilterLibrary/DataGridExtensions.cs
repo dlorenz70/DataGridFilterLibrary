@@ -13,10 +13,7 @@ namespace DataGridFilterLibrary
             DependencyProperty.RegisterAttached("DataGridFilterQueryController",
                 typeof(QueryController), typeof(DataGridExtensions));
 
-        public static QueryController GetDataGridFilterQueryController(DependencyObject target)
-        {
-            return (QueryController)target.GetValue(DataGridFilterQueryControllerProperty);
-        }
+        public static QueryController GetDataGridFilterQueryController(DependencyObject target) => (QueryController)target.GetValue(DataGridFilterQueryControllerProperty);
 
         public static void SetDataGridFilterQueryController(DependencyObject target, QueryController value)
         {
@@ -27,10 +24,7 @@ namespace DataGridFilterLibrary
             DependencyProperty.RegisterAttached("ClearFilterCommand",
                 typeof(DataGridFilterCommand), typeof(DataGridExtensions));
 
-        public static DataGridFilterCommand GetClearFilterCommand(DependencyObject target)
-        {
-            return (DataGridFilterCommand)target.GetValue(ClearFilterCommandProperty);
-        }
+        public static DataGridFilterCommand GetClearFilterCommand(DependencyObject target) => (DataGridFilterCommand)target.GetValue(ClearFilterCommandProperty);
 
         public static void SetClearFilterCommand(DependencyObject target, DataGridFilterCommand value)
         {
@@ -43,10 +37,7 @@ namespace DataGridFilterLibrary
                   new FrameworkPropertyMetadata(true));
 
         public static bool? GetIsFilterVisible(
-            DependencyObject target)
-        {
-            return (bool)target.GetValue(IsFilterVisibleProperty);
-        }
+DependencyObject target) => (bool)target.GetValue(IsFilterVisibleProperty);
 
         public static void SetIsFilterVisible(
             DependencyObject target, bool? value)
@@ -60,10 +51,7 @@ namespace DataGridFilterLibrary
                   new FrameworkPropertyMetadata(false));
 
         public static bool GetUseBackgroundWorkerForFiltering(
-            DependencyObject target)
-        {
-            return (bool)target.GetValue(UseBackgroundWorkerForFilteringProperty);
-        }
+DependencyObject target) => (bool)target.GetValue(UseBackgroundWorkerForFilteringProperty);
 
         public static void SetUseBackgroundWorkerForFiltering(
             DependencyObject target, bool value)
@@ -77,10 +65,7 @@ namespace DataGridFilterLibrary
                   new FrameworkPropertyMetadata(true));
 
         public static bool GetIsClearButtonVisible(
-            DependencyObject target)
-        {
-            return (bool)target.GetValue(IsClearButtonVisibleProperty);
-        }
+DependencyObject target) => (bool)target.GetValue(IsClearButtonVisibleProperty);
 
         public static void SetIsClearButtonVisible(
             DependencyObject target, bool value)
