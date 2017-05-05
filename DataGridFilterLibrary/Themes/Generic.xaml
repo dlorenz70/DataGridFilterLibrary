@@ -138,10 +138,6 @@
                                 Visibility="Collapsed"
                                 IsTextSearchEnabled="True"
 
-                                IsEditable="{Binding Path=AssignedDataGridColumn.UserCanEnterText, 
-                                        RelativeSource={RelativeSource AncestorType={x:Type local:DataGridColumnFilter}}, 
-                                        FallbackValue=False}"  
-                                
                                 IsReadOnly="False"
                                 
                                 Height="{Binding 
