@@ -223,7 +223,7 @@ namespace DataGridFilterLibrary
 
                 FilterOperator filterOperator = FilterOperator.Undefined;
 
-                string queryString   = String.Empty;
+                string queryString = String.Empty;
                 string queryStringTo = String.Empty;
 
                 FilterCurrentData = new FilterData(
@@ -240,12 +240,12 @@ namespace DataGridFilterLibrary
 
         private void initControlType()
         {
-            IsFirstFilterControl    = false;
+            IsFirstFilterControl = false;
 
-            IsTextFilterControl     = false;
-            IsNumericFilterControl  = false;
-            IsBooleanFilterControl  = false;
-            IsListFilterControl     = false;
+            IsTextFilterControl = false;
+            IsNumericFilterControl = false;
+            IsBooleanFilterControl = false;
+            IsListFilterControl = false;
             IsDateTimeFilterControl = false;
 
             IsNumericBetweenFilterControl = false;
@@ -285,7 +285,7 @@ namespace DataGridFilterLibrary
         {
             if (FilterCurrentData.Type == FilterType.List)
             {
-                ComboBox comboBox             = this.Template.FindName("PART_ComboBoxFilter", this) as ComboBox;
+                ComboBox comboBox = this.Template.FindName("PART_ComboBoxFilter", this) as ComboBox;
                 DataGridComboBoxColumn column = AssignedDataGridColumn as DataGridComboBoxColumn;
 
                 if (comboBox != null && column != null)
@@ -654,7 +654,7 @@ namespace DataGridFilterLibrary
 
         private void query_FilteringFinished(object sender, EventArgs e)
         {
-            if (FilterCurrentData.Equals((sender as QueryController).ColumnFilterData))
+            if (FilterCurrentData != null && FilterCurrentData.Equals((sender as QueryController).ColumnFilterData))
             {
                 this.IsFilteringInProgress = false;
             }
@@ -662,7 +662,7 @@ namespace DataGridFilterLibrary
 
         private void query_FilteringStarted(object sender, EventArgs e)
         {
-            if (FilterCurrentData.Equals((sender as QueryController).ColumnFilterData))
+            if (FilterCurrentData != null && FilterCurrentData.Equals((sender as QueryController).ColumnFilterData))
             {
                 this.IsFilteringInProgress = true;
             }
