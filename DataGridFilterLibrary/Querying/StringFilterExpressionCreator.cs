@@ -94,7 +94,11 @@ namespace DataGridFilterLibrary.Querying
                     && function != StringExpressionFunction.Undefined
                     && expressionValue != String.Empty)
                 {
+#if NETCOREAPP
+                    string expressionValueCopy = expressionValue;
+#else
                     string expressionValueCopy = String.Copy(expressionValue);
+#endif
 
                     expressionValueCopy = expressionValueCopy.Replace(WildcardAnyString, String.Empty);
 
