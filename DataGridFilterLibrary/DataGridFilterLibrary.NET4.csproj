@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <AssemblyName>DataGridFilterLibrary</AssemblyName>
+    <TargetFrameworks>net40;net45;net472</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <!-- https://github.com/dotnet/wpf/issues/765 -->
+  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
+    <Reference Include="PresentationFramework.Aero" />
+  </ItemGroup>
+
+</Project>
